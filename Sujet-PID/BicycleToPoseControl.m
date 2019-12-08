@@ -5,8 +5,8 @@ function [ u ] = BicycleToPoseControl( xTrue,xGoal )
 %   u is the control : [v phi]'
 
 % TODO 
-Krho   = 24;
-Kalpha = 18;
+Krho   = 30; %same as in BicycleToPointControl
+Kalpha = 20;
 Kbeta  = -10;
 
 error = xGoal-xTrue;

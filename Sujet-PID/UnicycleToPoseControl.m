@@ -6,8 +6,8 @@ function [ u ] = UnicycleToPoseControl( xTrue,xGoal )
 
 % TODO
 Krho      = 15;
-Kalpha    = 20;
-Kbeta     = 10;
+Kalpha    = 10;
+Kbeta     = 20;
 alpha_max = 1.2;
 
 error = xGoal - xTrue;
