@@ -1,3 +1,3 @@
 function setGlobal_index(val)
-global goalWaypointId
-goalWaypointId = 1;
+global path_id
+path_id = val;

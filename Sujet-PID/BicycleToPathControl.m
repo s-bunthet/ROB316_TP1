@@ -7,22 +7,20 @@ function [ u ] = BicycleToPathControl( xTrue, Path )
 %   u is the control : [v phi]'
 
 % TODO
-global goalWaypointId
-goalWaypointId = min(goalWaypointId, size(path,2));
+global path_id
+path_id = min(path_id, size(path,2));
 
 rho = 0.5;
-xGoal = Path(:,goalWaypointId);
+xGoal = Path(:,path_id);
 error = xGoal-xTrue;
-waypointDist = norm(error(1:2));
+distToGoal = norm(error(1:2));
 
-if waypointDist < rho
-    xGoal = Path(:,goalWaypointId);
-    goalWaypointId = goalWaypointId+1;
-    goalWaypointId = min(goalWaypointId, size(path,2));
-    
-    
+if distToGoal < rho
+    xGoal = Path(:,path_id);
+    path_id = path_id+1;
+    path_id = min(path_id, size(path,2)); 
 else
-    delta = Path(:,goalWaypointId)-Path(:, goalWaypointId-1);
+    delta = Path(:,path_id)-Path(:, path_id-1);
     delta = delta/norm(delta);
     error = xGoal - xTrue;
     goalDist = norm(error(1:2));
@@ -34,7 +32,7 @@ else
 end
 
 % once we know the next point, we use the controlor to reach that point
-Krho = 10;
+Krho = 5;
 Kalpha = 5;
 error = xGoal-xTrue;
 alpha = AngleWrap(atan2(error(2),error(1)))-xTrue(3);
