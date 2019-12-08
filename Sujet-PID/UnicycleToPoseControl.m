@@ -5,15 +5,15 @@ function [ u ] = UnicycleToPoseControl( xTrue,xGoal )
 %   u is the control : [v omega]'
 
 % TODO
-Krho = 20;
-Kalpha = 20;
-Kbeta = 20;
-alpha_max = 1.57;
+Krho      = 15;
+Kalpha    = 20;
+Kbeta     = 10;
+alpha_max = 1.2;
 
-error = xGoal-xTrue;
-beta = error(3);
-rho = norm(error(1:2));
-alpha = AngleWrap(atan2(error(2),error(1))-xTrue(3));
+error = xGoal - xTrue;
+beta  = error(3);
+rho   = norm(error(1:2));
+alpha = AngleWrap(atan2(error(2),error(1)) - xTrue(3));
 
 u(1) = Krho*rho;
 if abs(alpha)>alpha_max

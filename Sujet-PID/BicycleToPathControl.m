@@ -8,34 +8,34 @@ function [ u ] = BicycleToPathControl( xTrue, Path )
 
 % TODO
 global path_id
-path_id = min(path_id, size(path,2));
+path_id = min(path_id, size(Path,2));
 
-rho = 0.5;
-xGoal = Path(:,path_id);
-error = xGoal-xTrue;
+rho        = 0.4; %chosen value (trial and error...)
+xGoal      = Path(:,path_id); %current goal
+error      = xGoal - xTrue;
 distToGoal = norm(error(1:2));
 
 if distToGoal < rho
-    xGoal = Path(:,path_id);
     path_id = path_id+1;
-    path_id = min(path_id, size(path,2)); 
+    path_id = min(path_id, size(Path,2));
+    xGoal   = Path(:,path_id); 
 else
-    delta = Path(:,path_id)-Path(:, path_id-1);
-    delta = delta/norm(delta);
-    error = xGoal - xTrue;
-    goalDist = norm(error(1:2));
-    while goalDist < rho 
-      xGoal = xGoal + 0.01*delta;
-      error = xGoal - xTrue;
-      goalDist = norm(error(1:2));
+    delta      = Path(:,path_id) - Path(:, path_id-1);
+    delta      = delta/norm(delta);
+    error      = xGoal - xTrue;
+    distToGoal = norm(error(1:2));
+    while distToGoal > 1.1*rho 
+      xGoal      = xGoal - 0.01*delta;
+      error      = xGoal - xTrue;
+      distToGoal = norm(error(1:2));
     end
 end
 
 % once we know the next point, we use the controlor to reach that point
-Krho = 5;
-Kalpha = 5;
-error = xGoal-xTrue;
-alpha = AngleWrap(atan2(error(2),error(1)))-xTrue(3);
+Krho   = 24; %the same as in BicycleToPointControl
+Kalpha = 10; %the same as in BicycleToPointControl
+error  = xGoal - xTrue;
+alpha  = AngleWrap(atan2(error(2),error(1)) - xTrue(3));
 
 u(1) = Krho*rho;
 u(2) = Kalpha*alpha;

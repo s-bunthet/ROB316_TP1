@@ -6,12 +6,12 @@ function [ u ] = BicycleToPointControl( xTrue,xGoal )
 
 
 % TODO
-Krho = 20;
-Kalpha = 5;
+Krho   = 24;
+Kalpha = 10;
 
-error = xGoal-xTrue;
-rho = norm(error(1:2));
-alpha = AngleWrap(atan2(error(2),error(1)))-xTrue(3);
+error = xGoal - xTrue;
+rho   = norm(error(1:2));
+alpha = AngleWrap(atan2(error(2),error(1))-xTrue(3));
 
 u(1) = Krho*rho;
 u(2) = Kalpha*alpha;

@@ -5,15 +5,15 @@ function [ u ] = BicycleToPoseControl( xTrue,xGoal )
 %   u is the control : [v phi]'
 
 % TODO 
-Krho = 20;
-Kalpha = 5;
-Kbeta = -8;
+Krho   = 24;
+Kalpha = 18;
+Kbeta  = -10;
 
 error = xGoal-xTrue;
-rho = norm(error(1:2));
+rho   = norm(error(1:2));
 
-alpha = AngleWrap(atan2(error(2),error(1)))-xTrue(3);
-beta = xGoal(3)-AngleWrap(atan2(error(2),error(1)));
+alpha = AngleWrap(atan2(error(2),error(1)) - xTrue(3));
+beta  = AngleWrap(xGoal(3) - atan2(error(2),error(1)));
 
 u(1) = Krho*rho;
 u(2) = Kalpha*alpha + Kbeta*beta;
