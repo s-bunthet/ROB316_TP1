@@ -6,7 +6,7 @@ function [ u ] = BicycleToPoseControl( xTrue,xGoal )
 
 % TODO 
 Krho   = 30; %same as in BicycleToPointControl
-Kalpha = 20;
+Kalpha = 18;
 Kbeta  = -10;
 
 error = xGoal-xTrue;

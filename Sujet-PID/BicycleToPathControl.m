@@ -32,7 +32,7 @@ else
 end
 
 % once we know the next point, we use the controlor to reach that point
-Krho   = 25; %the same as in BicycleToPointControl
+Krho   = 25; %almost the same as in BicycleToPointControl
 Kalpha = 10; %the same as in BicycleToPointControl
 error  = xGoal - xTrue;
 alpha  = AngleWrap(atan2(error(2),error(1)) - xTrue(3));
